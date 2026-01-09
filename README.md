@@ -104,9 +104,10 @@ To configure your own instance:
    - Generate and copy your token (starts with `github_pat_...`)
 
 2. **Configure the Game**:
-   - Open `config.js`
-   - Replace `YOUR_GITHUB_TOKEN_HERE` with your actual token
+   - Copy `config.example.js` to `config.js`
+   - Open `config.js` and replace `YOUR_GITHUB_TOKEN_HERE` with your actual token
    - Change the `GAME_PASSWORD` if desired (default: "joplin")
+   - Note: `config.js` is gitignored to keep your token secure
    - Deploy the game
 
 3. **Share the Password**:
