@@ -499,6 +499,10 @@ async function getAIResponse(character, history) {
     // Try to use real AI if token is available
     if (hasGitHubToken()) {
         try {
+            console.log('🤖 Calling GitHub Models API...');
+            console.log('Endpoint:', API_CONFIG.endpoint);
+            console.log('Model:', API_CONFIG.model);
+
             const response = await fetch(API_CONFIG.endpoint, {
                 method: 'POST',
                 headers: {
@@ -520,19 +524,24 @@ async function getAIResponse(character, history) {
             });
 
             if (!response.ok) {
-                console.error('API Error:', response.status, response.statusText);
-                throw new Error(`API returned ${response.status}`);
+                const errorText = await response.text();
+                console.error('❌ API Error:', response.status, response.statusText);
+                console.error('Error details:', errorText);
+                throw new Error(`API returned ${response.status}: ${errorText}`);
             }
 
             const data = await response.json();
+            console.log('✅ AI Response received:', data);
             return data.choices[0].message.content;
         } catch (error) {
-            console.error('Error calling GitHub Models API:', error);
+            console.error('❌ Error calling GitHub Models API:', error);
+            console.log('⚠️ Falling back to simulated responses');
             // Fall back to simulated responses
             return getFallbackResponse(character, history);
         }
     }
 
+    console.log('⚠️ No token configured, using fallback responses');
     // Use fallback responses if no token
     return getFallbackResponse(character, history);
 }
