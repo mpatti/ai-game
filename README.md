@@ -77,9 +77,24 @@ Make sure GitHub Pages is enabled in your repository settings and set to use the
 
 ## AI-Powered Conversations
 
-The game now supports real AI-powered conversations using **GitHub Models**!
+The game features real AI-powered conversations using **GitHub Models** with GPT-4o-mini!
 
-### How to Enable AI Conversations
+### Access
+
+This game is password-protected. Enter the password on the start screen to play.
+
+### How It Works
+
+- Each of the 7 characters uses **GPT-4o-mini** (the cheapest GitHub Models option)
+- Characters respond with their unique personalities and backstories
+- The AI remembers your conversation history with each character
+- Conversations feel natural and dynamic
+
+The game uses the [GitHub Models API](https://docs.github.com/en/github-models) for all AI interactions.
+
+### Setup (For Repository Owner)
+
+To configure your own instance:
 
 1. **Get a GitHub Token**:
    - Go to [github.com/settings/tokens](https://github.com/settings/tokens)
@@ -88,27 +103,17 @@ The game now supports real AI-powered conversations using **GitHub Models**!
    - Under "Permissions", enable **`models:read`**
    - Generate and copy your token (starts with `github_pat_...`)
 
-2. **Add Token to Game**:
-   - On the start screen, paste your token in the "GitHub Token" field
-   - Click "Save Token" (it's stored securely in your browser's localStorage)
-   - Now start the game!
+2. **Configure the Game**:
+   - Open `config.js`
+   - Replace `YOUR_GITHUB_TOKEN_HERE` with your actual token
+   - Change the `GAME_PASSWORD` if desired (default: "joplin")
+   - Deploy the game
 
-3. **Enjoy Real AI Conversations**:
-   - Each character uses GPT-4o-mini (the cheapest model on GitHub Models)
-   - Characters respond with their unique personalities and backstories
-   - The AI remembers your conversation history with each character
-
-### How It Works
-
-The game uses the [GitHub Models API](https://docs.github.com/en/github-models) which provides access to various AI models including:
-- **GPT-4o-mini** (default, most cost-effective)
-- Other models available through GitHub's infrastructure
+3. **Share the Password**:
+   - Only share the password with people you trust
+   - This prevents random users from consuming your API quota
 
 **Cost**: GitHub Models charges $0.00001 USD per token unit. A typical conversation message costs fractions of a cent.
-
-### Fallback Mode
-
-If you don't provide a token, the game falls back to simulated responses with character-specific patterns. You can still play and enjoy the game!
 
 ## Customization
 

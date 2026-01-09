@@ -19,16 +19,11 @@
                 <p><strong>E</strong> - Talk to nearby folks</p>
                 <p><strong>ESC</strong> - Exit conversation</p>
 
-                <div id="token-setup">
-                    <h3>AI Setup (Optional)</h3>
-                    <p style="font-size: 0.9em; margin: 10px 0;">For real AI conversations, add your GitHub token:</p>
-                    <input type="password" id="github-token-input" placeholder="GitHub Token (ghp_...)">
-                    <button id="save-token-btn">Save Token</button>
-                    <p id="token-status" style="font-size: 0.85em; margin-top: 8px;"></p>
-                    <p style="font-size: 0.8em; margin-top: 10px; color: #b8a88a;">
-                        Get a token at <a href="https://github.com/settings/tokens" target="_blank" style="color: #d4af37;">github.com/settings/tokens</a><br>
-                        with <strong>models:read</strong> permission
-                    </p>
+                <div id="password-setup">
+                    <h3>Enter Password</h3>
+                    <p style="font-size: 0.9em; margin: 10px 0;">This game requires a password to play:</p>
+                    <input type="password" id="password-input" placeholder="Enter password">
+                    <p id="password-status" style="font-size: 0.85em; margin-top: 8px;"></p>
                 </div>
 
                 <button id="start-btn">Enter the Saloon</button>

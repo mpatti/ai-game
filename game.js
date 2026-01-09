@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { characters } from './characters.js';
-import { API_CONFIG, setGitHubToken, getGitHubToken, hasGitHubToken } from './config.js';
+import { API_CONFIG, getGitHubToken, hasGitHubToken, checkPassword } from './config.js';
 
 // Game state
 const gameState = {
@@ -291,8 +291,7 @@ function setupEventListeners() {
     const sendBtn = document.getElementById('send-btn');
     const chatInput = document.getElementById('chat-input');
     const endConversationBtn = document.getElementById('end-conversation-btn');
-    const saveTokenBtn = document.getElementById('save-token-btn');
-    const tokenInput = document.getElementById('github-token-input');
+    const passwordInput = document.getElementById('password-input');
 
     startBtn.addEventListener('click', startGame);
     sendBtn.addEventListener('click', sendMessage);
@@ -300,13 +299,11 @@ function setupEventListeners() {
         if (e.key === 'Enter') sendMessage();
     });
     endConversationBtn.addEventListener('click', endConversation);
-    saveTokenBtn.addEventListener('click', saveToken);
 
-    // Load existing token if available
-    if (hasGitHubToken()) {
-        tokenInput.value = '••••••••••••••••';
-        updateTokenStatus('Token loaded from storage', 'success');
-    }
+    // Allow Enter key on password field
+    passwordInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') startGame();
+    });
 
     // Keyboard controls
     document.addEventListener('keydown', onKeyDown);
@@ -327,27 +324,31 @@ function setupEventListeners() {
     document.addEventListener('mousemove', onMouseMove);
 }
 
-function saveToken() {
-    const tokenInput = document.getElementById('github-token-input');
-    const token = tokenInput.value.trim();
-
-    if (!token || token === '••••••••••••••••') {
-        updateTokenStatus('Please enter a valid token', 'error');
-        return;
-    }
-
-    setGitHubToken(token);
-    tokenInput.value = '••••••••••••••••';
-    updateTokenStatus('Token saved successfully!', 'success');
-}
-
-function updateTokenStatus(message, type) {
-    const statusEl = document.getElementById('token-status');
+function updatePasswordStatus(message, type) {
+    const statusEl = document.getElementById('password-status');
     statusEl.textContent = message;
     statusEl.className = type;
 }
 
 function startGame() {
+    const passwordInput = document.getElementById('password-input');
+    const password = passwordInput.value.trim();
+
+    // Check password
+    if (!checkPassword(password)) {
+        updatePasswordStatus('Incorrect password', 'error');
+        passwordInput.value = '';
+        passwordInput.focus();
+        return;
+    }
+
+    // Check if token is configured
+    if (!hasGitHubToken()) {
+        updatePasswordStatus('Game not configured - contact admin', 'error');
+        return;
+    }
+
+    // Password correct, start the game
     gameState.isPlaying = true;
     document.getElementById('instructions').classList.add('hidden');
     document.body.requestPointerLock();
