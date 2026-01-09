@@ -14,7 +14,7 @@ export function getGitHubToken() {
 }
 
 export function hasGitHubToken() {
-    return API_CONFIG.githubToken && API_CONFIG.githubToken !== 'YOUR_GITHUB_TOKEN_HERE';
+    return API_CONFIG.githubToken && API_CONFIG.githubToken !== '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';
 }
 
 export function checkPassword(password) {
