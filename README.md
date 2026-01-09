@@ -41,6 +41,21 @@ python -m http.server 8000
 
 Then open http://localhost:8000 in your browser.
 
+## Deployment
+
+### Deploy to GitHub Pages
+
+To deploy the game to GitHub Pages:
+
+```bash
+npm run deploy
+```
+
+This will build the project and deploy it to the `gh-pages` branch. After deployment, the game will be available at:
+`https://[your-username].github.io/ai-game/`
+
+Make sure GitHub Pages is enabled in your repository settings and set to use the `gh-pages` branch.
+
 ## Controls
 
 - **WASD** - Move around the saloon
