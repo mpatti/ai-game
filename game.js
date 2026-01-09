@@ -354,6 +354,12 @@ function startGame() {
 }
 
 function onKeyDown(event) {
+    // Handle Escape key regardless of pause state
+    if (event.code === 'Escape' && gameState.isPaused) {
+        endConversation();
+        return;
+    }
+
     if (gameState.isPaused) return;
 
     switch (event.code) {
@@ -365,11 +371,6 @@ function onKeyDown(event) {
         case 'KeyE':
             if (gameState.nearbyNPC && !gameState.isPaused) {
                 startConversation(gameState.nearbyNPC);
-            }
-            break;
-        case 'Escape':
-            if (gameState.isPaused) {
-                endConversation();
             }
             break;
     }
