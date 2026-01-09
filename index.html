@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Western Bar Tales - An AI Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-overlay">
+            <div id="instructions" class="panel">
+                <h2>🤠 Western Bar Tales</h2>
+                <p><strong>WASD</strong> - Move around</p>
+                <p><strong>Mouse</strong> - Look around</p>
+                <p><strong>E</strong> - Talk to nearby folks</p>
+                <p><strong>ESC</strong> - Exit conversation</p>
+                <button id="start-btn">Enter the Saloon</button>
+            </div>
+
+            <div id="crosshair"></div>
+
+            <div id="interaction-prompt" class="hidden">
+                Press <span class="key">E</span> to talk
+            </div>
+
+            <div id="conversation-panel" class="hidden">
+                <div id="npc-info">
+                    <h3 id="npc-name"></h3>
+                    <p id="npc-subtitle"></p>
+                </div>
+                <div id="chat-messages"></div>
+                <div id="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="What would you like to say?">
+                    <button id="send-btn">Send</button>
+                </div>
+                <div id="conversation-actions">
+                    <button id="end-conversation-btn">Walk Away (ESC)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/game.js"></script>
+</body>
+</html>

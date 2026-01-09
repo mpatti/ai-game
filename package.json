@@ -1,0 +1,20 @@
+{
+  "name": "western-bar-ai-game",
+  "version": "1.0.0",
+  "description": "A 3D Western bar game with AI-powered character conversations",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": ["game", "3d", "ai", "western", "threejs"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
