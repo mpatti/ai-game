@@ -75,36 +75,40 @@ Make sure GitHub Pages is enabled in your repository settings and set to use the
 7. Press ESC or click "Walk Away" to end the conversation
 8. Explore and talk to all 7 characters to learn their stories!
 
-## AI Integration Note
+## AI-Powered Conversations
 
-The current version uses simulated AI responses with character-specific patterns. To integrate real AI (like Claude API):
+The game now supports real AI-powered conversations using **GitHub Models**!
 
-1. Get an API key from Anthropic
-2. Replace the `getAIResponse` function in `game.js` with actual API calls
-3. Use the character's `personality` field as the system prompt
+### How to Enable AI Conversations
 
-Example integration:
+1. **Get a GitHub Token**:
+   - Go to [github.com/settings/tokens](https://github.com/settings/tokens)
+   - Click "Generate new token" → "Fine-grained personal access token"
+   - Give it a name (e.g., "Western Bar Game")
+   - Under "Permissions", enable **`models:read`**
+   - Generate and copy your token (starts with `github_pat_...`)
 
-```javascript
-async function getAIResponse(character, history) {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'YOUR_API_KEY',
-            'anthropic-version': '2023-06-01'
-        },
-        body: JSON.stringify({
-            model: 'claude-3-5-sonnet-20241022',
-            max_tokens: 1024,
-            system: character.personality,
-            messages: history
-        })
-    });
-    const data = await response.json();
-    return data.content[0].text;
-}
-```
+2. **Add Token to Game**:
+   - On the start screen, paste your token in the "GitHub Token" field
+   - Click "Save Token" (it's stored securely in your browser's localStorage)
+   - Now start the game!
+
+3. **Enjoy Real AI Conversations**:
+   - Each character uses GPT-4o-mini (the cheapest model on GitHub Models)
+   - Characters respond with their unique personalities and backstories
+   - The AI remembers your conversation history with each character
+
+### How It Works
+
+The game uses the [GitHub Models API](https://docs.github.com/en/github-models) which provides access to various AI models including:
+- **GPT-4o-mini** (default, most cost-effective)
+- Other models available through GitHub's infrastructure
+
+**Cost**: GitHub Models charges $0.00001 USD per token unit. A typical conversation message costs fractions of a cent.
+
+### Fallback Mode
+
+If you don't provide a token, the game falls back to simulated responses with character-specific patterns. You can still play and enjoy the game!
 
 ## Customization
 

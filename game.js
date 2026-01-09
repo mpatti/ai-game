@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { characters } from './characters.js';
+import { API_CONFIG, setGitHubToken, getGitHubToken, hasGitHubToken } from './config.js';
 
 // Game state
 const gameState = {
@@ -290,6 +291,8 @@ function setupEventListeners() {
     const sendBtn = document.getElementById('send-btn');
     const chatInput = document.getElementById('chat-input');
     const endConversationBtn = document.getElementById('end-conversation-btn');
+    const saveTokenBtn = document.getElementById('save-token-btn');
+    const tokenInput = document.getElementById('github-token-input');
 
     startBtn.addEventListener('click', startGame);
     sendBtn.addEventListener('click', sendMessage);
@@ -297,6 +300,13 @@ function setupEventListeners() {
         if (e.key === 'Enter') sendMessage();
     });
     endConversationBtn.addEventListener('click', endConversation);
+    saveTokenBtn.addEventListener('click', saveToken);
+
+    // Load existing token if available
+    if (hasGitHubToken()) {
+        tokenInput.value = '••••••••••••••••';
+        updateTokenStatus('Token loaded from storage', 'success');
+    }
 
     // Keyboard controls
     document.addEventListener('keydown', onKeyDown);
@@ -315,6 +325,26 @@ function setupEventListeners() {
 
     // Mouse movement
     document.addEventListener('mousemove', onMouseMove);
+}
+
+function saveToken() {
+    const tokenInput = document.getElementById('github-token-input');
+    const token = tokenInput.value.trim();
+
+    if (!token || token === '••••••••••••••••') {
+        updateTokenStatus('Please enter a valid token', 'error');
+        return;
+    }
+
+    setGitHubToken(token);
+    tokenInput.value = '••••••••••••••••';
+    updateTokenStatus('Token saved successfully!', 'success');
+}
+
+function updateTokenStatus(message, type) {
+    const statusEl = document.getElementById('token-status');
+    statusEl.textContent = message;
+    statusEl.className = type;
 }
 
 function startGame() {
@@ -464,18 +494,50 @@ async function sendMessage() {
 }
 
 async function getAIResponse(character, history) {
-    // This is a simulated AI response system
-    // In a real implementation, you would call an AI API (like Anthropic's Claude API)
-    // For this demo, we'll create contextual responses
+    // Try to use real AI if token is available
+    if (hasGitHubToken()) {
+        try {
+            const response = await fetch(API_CONFIG.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getGitHubToken()}`
+                },
+                body: JSON.stringify({
+                    model: API_CONFIG.model,
+                    messages: [
+                        {
+                            role: 'system',
+                            content: character.personality
+                        },
+                        ...history
+                    ],
+                    temperature: 0.9,
+                    max_tokens: 200
+                })
+            });
 
+            if (!response.ok) {
+                console.error('API Error:', response.status, response.statusText);
+                throw new Error(`API returned ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+        } catch (error) {
+            console.error('Error calling GitHub Models API:', error);
+            // Fall back to simulated responses
+            return getFallbackResponse(character, history);
+        }
+    }
+
+    // Use fallback responses if no token
+    return getFallbackResponse(character, history);
+}
+
+function getFallbackResponse(character, history) {
     const userMessage = history[history.length - 1].content.toLowerCase();
-
-    // Character-specific response patterns
     const responses = getCharacterResponses(character, userMessage);
-
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
-
     return responses[Math.floor(Math.random() * responses.length)];
 }
 

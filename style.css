@@ -62,6 +62,57 @@ body {
     font-size: 1.1em;
 }
 
+#token-setup {
+    background: rgba(30, 20, 10, 0.6);
+    border: 2px solid #8b6f47;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+#token-setup h3 {
+    color: #d4af37;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+
+#github-token-input {
+    width: 100%;
+    padding: 10px;
+    background: rgba(60, 50, 40, 0.8);
+    border: 2px solid #8b6f47;
+    border-radius: 4px;
+    color: #f4e8d0;
+    font-size: 0.95em;
+    font-family: 'Georgia', serif;
+    margin-top: 10px;
+}
+
+#github-token-input:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+#save-token-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1em;
+}
+
+#token-status {
+    text-align: center;
+    font-weight: bold;
+}
+
+#token-status.success {
+    color: #90EE90;
+}
+
+#token-status.error {
+    color: #FF6B6B;
+}
+
 #start-btn, button {
     background: #8b6f47;
     color: #f4e8d0;
