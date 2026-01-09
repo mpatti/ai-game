@@ -29,3 +29,6 @@ lerna-debug.log*
 .env
 .env.local
 .env.*.local
+
+# Config with tokens (keep local only)
+config.js
