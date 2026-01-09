@@ -3,7 +3,7 @@ export const API_CONFIG = {
     endpoint: 'https://models.inference.ai.azure.com/chat/completions',
     model: 'gpt-4o-mini', // Cheapest model for GitHub Models
     // Add your GitHub token here (get it from https://github.com/settings/tokens with models:read permission)
-    githubToken: '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'
+    githubToken: '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'
 };
 
 // Password protection
@@ -14,7 +14,7 @@ export function getGitHubToken() {
 }
 
 export function hasGitHubToken() {
-    return API_CONFIG.githubToken && API_CONFIG.githubToken !== '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';
+    return API_CONFIG.githubToken && API_CONFIG.githubToken !== 'YOUR_GITHUB_TOKEN_HERE';
 }
 
 export function checkPassword(password) {
